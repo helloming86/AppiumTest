@@ -1,0 +1,9 @@
+[caps]
+platformName = "android"
+deviceName = "emulator-5554"
+appPackage = "com.android.settings"
+appActivity = ".Settings"
+
+[appium_lib]
+sauce_username = ""
+sauce_access_key = ""
