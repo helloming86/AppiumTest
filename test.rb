@@ -9,11 +9,8 @@ caps = {
       'platformName' => 'Android',
       'platformVersion' => '6.0',
       'deviceName' => 'emulator-5554',
-      'app' => 'D:\hujiang.apk',
-      'appPackage' => 'com.hjwordgames',
-      #'appPackage' => 'com.android.launcher3',
-      #'appActivity' => '.Launcher'
-      'appActivity' => '.activity.NoLoginActivity'
+      'appPackage' => 'com.qtcem.yexiu',
+      'appActivity' => '.Home'
     },
   appium_lib:
     {
