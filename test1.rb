@@ -1,6 +1,7 @@
 #依赖关系
 require 'rubygems'
 require 'appium_lib'
+require 'rspec/expectations'
 
 #Appium server capabilities 预设
 caps = {
@@ -88,6 +89,8 @@ puts ell.displayed?
 
 #使用异常处理机制，该方法验证通过
 
+=begin
+
 #包含异常处理机制的代码块begin...end
 begin
   #需要执行的代码
@@ -132,6 +135,8 @@ ensure
   puts "有无异常均执行的部分"
 end
 
+=end
+
 #使用find_elements、swipe和循环，可以定位到元素，还没有退出循环的判断，需要继续研究
 #使用display和nil，不论是否定位到元素，text_textview.display.nil?都一直为ture，不能作为退出循环的判断
 #text_textview = find_elements(:uiautomator, 'new UiSelector().className("android.widget.TextView").textContains("天气变凉")')
@@ -149,8 +154,16 @@ end
 
 
 #切换到“我”分页
+find_element(:id,'com.qtcem.yexiu:id/rel_mine').click
+sleep 5
+setNode = find_element(:uiautomator, 'new UiSelector().className("android.widget.TextView").text("设置")')
+puts setNode.text
+#text_exact和display输出的结果一样？从控制台输出看，是一致的
+#text_exact方法很有意思
+puts text_exact("设置")
+puts setNode.display
+exists{text('设置')} ? puts('true') : puts('false')
 #登录
-
 sleep 5
 
 #关闭driver
