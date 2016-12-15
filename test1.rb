@@ -30,6 +30,9 @@ Appium.promote_appium_methods Object
 
 #puts get_source
 
+#puts get_settings
+#puts session_id
+#puts window_size
 
 #以scrollview的出现作为页面加载完毕的判断
 wait {element = find_element(:id,'com.qtcem.yexiu:id/scrollview')}
@@ -58,7 +61,6 @@ puts ell.displayed?
 #sleep 1
 
 #同城聚左右滑动
-
 #首页下滑，返回主页面
 #swipe(:start_y => 0.1,:delta_y => 0.2,:start_x => 0.9, :delta_x => 0, :duration => 800)
 #sleep 1
@@ -135,23 +137,37 @@ ensure
   puts "有无异常均执行的部分"
 end
 
-=end
 
-#使用find_elements、swipe和循环，可以定位到元素，还没有退出循环的判断，需要继续研究
+
+#使用find_elements、swipe和循环，可以定位到元素，使用是否为空(empty?)作为条件进行判断
 #使用display和nil，不论是否定位到元素，text_textview.display.nil?都一直为ture，不能作为退出循环的判断
-#text_textview = find_elements(:uiautomator, 'new UiSelector().className("android.widget.TextView").textContains("天气变凉")')
-#puts "heheh"
-#puts text_textview.display
-#puts text_textview.display.nil?
-#while  text_textview.display.nil? do
-#  swipe(:start_y => 0.8,:delta_y => -0.25,:start_x => 0.9, :delta_x => 0, :duration => 800)
-#  sleep 1
-#  text_textview = find_elements(:uiautomator, 'new UiSelector().className("android.widget.TextView").textContains("天气变凉")')
-#  puts "hahaha"
-#  puts text_textview.display
-#  puts text_textview.display.nil?
-#end
+#研究ruby下的appium API文档后，发现可以用empty来处理，具体方法如下
+#判断find_elements是否为空，为空继续操作；不为空，跳出循环；
+#find_elements(:id, 'XXX').empty?
+puts "定位页面元素，使用findelements定位"
+text_textview = find_elements(:uiautomator, 'new UiSelector().className("android.widget.TextView").textContains("主题影院")')
+puts "输出定位结果"
+puts "定位元素为空？" + text_textview.empty?.to_s
+puts text_textview.display
+while  text_textview.empty? do
+  puts "进入循环，滑动页面"
+  swipe(:start_y => 0.8,:delta_y => -0.5,:start_x => 0.9, :delta_x => 0, :duration => 500)
+  puts "swipe命令执行完毕，等待一秒"
+  sleep 1
+  puts "循环中重新定位元素"
+  text_textview = find_elements(:uiautomator, 'new UiSelector().className("android.widget.TextView").textContains("主题影院")')
+  puts "输出循环中定位结果"
+  puts "定位元素为空？" + text_textview.empty?.to_s
+  puts text_textview.display
+end
+#定位到元素后，执行点击操作
+unless text_textview.empty? then
+  #因为是find_elements，是一组数据，所以要指定index
+  #第一条数据，index为0
+  text_textview[0].click
+end
 
+=end
 
 #切换到“我”分页
 find_element(:id,'com.qtcem.yexiu:id/rel_mine').click
@@ -165,6 +181,7 @@ puts setNode.display
 exists{text('设置')} ? puts('true') : puts('false')
 #登录
 sleep 5
+
 
 #关闭driver
 driver_quit
