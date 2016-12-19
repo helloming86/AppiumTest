@@ -16,3 +16,18 @@ module MyModule
 end
 World(MyModule)
 =end
+
+Dir.glob(File.join(File.dirname(__FILE__), '..', '..', 'pages','**/*.rb')) {|file| require_relative file}
+
+module AndroidPageDomain
+  def home_page
+    home_page = Screen::Android::HomePage.new
+  end
+  def me_tab
+    me_tab = Screen::Android::MeTab.new
+  end
+  def login_page
+    login_page = Screen::Android::CommonLogin.new
+  end
+end
+World(AndroidPageDomain)

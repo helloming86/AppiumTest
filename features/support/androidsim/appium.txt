@@ -5,5 +5,5 @@ appPackage = "com.qtcem.yexiu"
 appActivity = ".Home"
 
 [appium_lib]
-sauce_username = ""
-sauce_access_key = ""
+sauce_username = false
+sauce_access_key = false
