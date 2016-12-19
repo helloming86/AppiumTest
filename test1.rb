@@ -43,6 +43,8 @@ puts ell.displayed?
 
 puts "当前页面的Activity是：" + current_activity
 
+#testsdf 
+
 #swipe方法说明
 #swipe相当于在Appium里面执行如下动作：1.短按press2.等待wait3.移动到MoveTo4.释放release
 #理解swipe在Appium里面的执行非常重要
