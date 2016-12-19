@@ -152,11 +152,12 @@ module OtherModule
   end
 end
 
-#不使用下面的方式处理这些封装的module
-#网上，使用下面的方式处理，并在env.rb做如下的处理：
+#不建议使用下面的方式处理将上面封装好的module放在类MyAppPage里面
+#GITHUB上面一个非常不错的示例项目使用下面的方式封装，并在env.rb做如下的处理：
 #Appium.promote_appium_methods MyAppPage
-#存在的问题是，如果采用该种方式处理：在定义的pages页面，必须使用MyAppPage定义的方法，appium方法全部失效了
-#换句话讲，如果采用该种方式处理，所有用到的appium方法全部需要重写后才可以使用
+#如果采用该种方式处理，存在的问题是：在定义的pages页面，必须使用MyAppPage定义的方法，否则无法定位和操作
+#换句话讲，如果采用该种方式处理，appium的方法全部失效(比如find_element)，Page页面中用到的所有appium方法，必须在MyAppPage里面进行重新封装定义才行
+#而使用Page页面include这里面定义的module，既可以使用原生方法，也可以使用module定义的方法
 =begin
 class MyAppPage
   include LocatorModule

@@ -43,7 +43,7 @@ puts ell.displayed?
 
 puts "当前页面的Activity是：" + current_activity
 
-#testsdf 
+#testsdf
 
 #swipe方法说明
 #swipe相当于在Appium里面执行如下动作：1.短按press2.等待wait3.移动到MoveTo4.释放release
@@ -188,13 +188,6 @@ puts setNode.display
 puts "使用text_exact方法定位设置"
 puts text_exact("设置")
 
-#检查点
-puts "使用exists和text方法判断设置是否存在作为检查点"
-puts text('设置')
-exists{text('设置')} ? puts('true') : puts('false')
-puts "当前页面的Activity是：" + current_activity
-
-
 #未登录点击卡包
 puts "点击卡包"
 find_element(:id,'com.qtcem.yexiu:id/ll_card').click
@@ -211,37 +204,7 @@ end
 
 
 
-#登录
-#点击登录
-find_element(:id,'com.qtcem.yexiu:id/ll_click').click
 
-#检查点，页面跳转
-#textfield_exact是精准匹配，textfield是模糊匹配，实测模糊匹配不能使用正则表达式，带s是全部，不带是第一个
-#在做匹配时，优先考虑模糊匹配；另根据实际情况，考虑是否带s
-#同理，text，button也是一样的机制
-exists{textfield("输入")} ? puts('正确跳转') : puts('未正确跳转')
-puts textfield('输入').text
-
-puts "当前页面的Activity是：" + current_activity
-
-puts "输入用户名和密码，点击登录"
-textfields[0].type "15237961489"
-textfields[1].type "123123"
-text("立即登录").click
-
-sleep 10
-
-#检查点
-puts "当前页面的Activity是：" + current_activity
-#从功能的角度设置检查点
-#如登录成功，点击卡包，会跳转到卡包页(.mine.MyCardBag)
-puts "点击卡包"
-find_element(:id,'com.qtcem.yexiu:id/ll_card').click
-sleep 3
-puts "当前页面的Activity是：" + current_activity
-if current_activity.include?("MyCardBag")
-  puts "点击卡包，跳转至新页，而不是提示登录，正常"
-end
 sleep 5
 #关闭driver
 driver_quit
