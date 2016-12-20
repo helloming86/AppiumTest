@@ -5,6 +5,11 @@ module LocatorModule
 
   #Text，对应android.widget.TextView
   #定义不存在的检查点，存在时报错
+
+  def byId(id)
+    find_element(:id, "#{id}")
+  end
+
   def verifyTextNotExist1(content)
     wait do
       exists{text(content)} ? puts("出现：" + "#{content}") : puts("未出现：" + "#{content}")
@@ -139,10 +144,68 @@ module GestureModule
     end
   end
 
+  def absoSwipe(ex,ey,eh,ew,direction)
+    case direction
+      when "Up"
+        #底部上滑屏幕的70%
+        swipeOpts = {
+          :start_y => ey + eh*3/4,
+          :delta_y => -eh/2,
+          :start_x => ex + ew/2,
+          :delta_x => 0,
+          :duration => 500
+        }
+        swipe(swipeOpts)
+      when "Down"
+        swipeOpts = {
+          :start_y => ey + eh/4,
+          :delta_y => eh/2,
+          :start_x => ex + ew/2,
+          :delta_x => 0,
+          :duration => 500
+        }
+        swipe(swipeOpts)
+      when "Left"
+        swipeOpts = {
+          :start_y => ey + eh/2,
+          :delta_y => 0,
+          :start_x => ex + ew*3/4,
+          :delta_x => -ew/2,
+          :duration => 500
+        }
+        swipe(swipeOpts)
+      when "Right"
+        swipeOpts = {
+          :start_y => ey + eh/2,
+          :delta_y => 0,
+          :start_x => ex + ew/4,
+          :delta_x => ew/2,
+          :duration => 500
+        }
+        swipe(swipeOpts)
+      else
+          puts "Game Over"
+    end
+  end
+
+
 end
 
 module OtherModule
   #Todo：其他方法的参数化封装
+
+  #位置信息
+  def getposition(element)
+    ep = Array[element.location.x,element.location.y,element.size.height,element.size.width]
+    return ep
+  end
+
+  def specifyLists(content)
+    #循环：条件为假时一直执行swip
+    swipe(:start_y => 0.8,:delta_y => -0.5,:start_x => 0.9, :delta_x => 0, :duration => 500) until  exists{text(content)}
+    puts text(content).text
+    text(content).click
+  end
 
   #截屏保存
   def captureScreen(screenshot_name)
@@ -153,8 +216,9 @@ module OtherModule
 end
 
 #不建议使用下面的方式处理将上面封装好的module放在类MyAppPage里面
-#GITHUB上面一个非常不错的示例项目使用下面的方式封装，并在env.rb做如下的处理：
-#Appium.promote_appium_methods MyAppPage
+#GitHub上面一个非常不错的示例项目使用下面的方式处理
+#1. 将上面定义的Module封装到MyAppPage类中
+#2. 在env.rb做如下处理：Appium.promote_appium_methods MyAppPage
 #如果采用该种方式处理，存在的问题是：在定义的pages页面，必须使用MyAppPage定义的方法，否则无法定位和操作
 #换句话讲，如果采用该种方式处理，appium的方法全部失效(比如find_element)，Page页面中用到的所有appium方法，必须在MyAppPage里面进行重新封装定义才行
 #而使用Page页面include这里面定义的module，既可以使用原生方法，也可以使用module定义的方法

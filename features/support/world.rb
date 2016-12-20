@@ -29,5 +29,11 @@ module AndroidPageDomain
   def login_page
     login_page = Screen::Android::CommonLogin.new
   end
+  def party_page
+    login_page = Screen::Android::ParyPage.new
+  end
+  def newsdetail_page
+    login_page = Screen::Android::NewsDetailPage.new
+  end
 end
 World(AndroidPageDomain)

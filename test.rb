@@ -74,8 +74,6 @@ puts get_source
 #element = find_element(:uiautomator, 'new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().text("WebView").instance(0));')
 #element.text # "WebView"
 
-
-
 #By accessibility，推荐使用
 #accessibility_id对应content-desc
 #find_element(:accessibility_id,'Apps').click
