@@ -1,0 +1,3 @@
+defaults: features/. -f pretty -f html --out reports/result.html -f rerun --out .cucumber.rerun
+cum1: features/home.feature -f pretty -f html --out reports/home.html -f rerun --out .cucumber.rerun
+cum2: features/login.feature -f pretty -f html --out reports/login.html -f rerun --out .cucumber.rerun
